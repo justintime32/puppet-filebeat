@@ -22,9 +22,9 @@ describe 'filebeat::prospector', :type => :define do
 
   context 'On Linux' do
     let :facts do {
-      :kernel => 'Linux',
-      :osfamily => 'Linux',
-      :rubyversion => '1.9.3',
+      kernel: 'Linux',
+      osfamily: 'Linux',
+      rubyversion: '1.9.3',
     }
     end
 
@@ -39,9 +39,9 @@ describe 'filebeat::prospector', :type => :define do
       end
 
       it { is_expected.to contain_file('filebeat-test-logs').with(
-        :path => '/etc/filebeat/conf.d/test-logs.yml',
-        :mode => '0644',
-        :content => 'filebeat:
+        path: '/etc/filebeat/conf.d/test-logs.yml',
+        mode: '0644',
+        content: 'filebeat:
   prospectors:
     - paths:
       - /var/log/apache2/*.log
@@ -63,21 +63,21 @@ describe 'filebeat::prospector', :type => :define do
     context 'with some java like multiline settings' do
       let :params do
         {
-          :paths => [
+          paths: [
             '/var/log/java_app/some.log',
           ],
-          :doc_type => 'java_app',
-          :exclude_lines => [
+          doc_type: 'java_app',
+          exclude_lines: [
             '^DEBUG',
           ],
-          :include_lines => [
+          include_line: [
             '^ERROR',
             '^WARN',
           ],
-          :exclude_files => [
+          exclude_files: [
             '.gz$',
           ],
-          :multiline => {
+          multiline: {
             'pattern' => '^\[',
             'negate' => 'true',
             'match' => 'after',
@@ -86,9 +86,9 @@ describe 'filebeat::prospector', :type => :define do
       end
 
       it { is_expected.to contain_file('filebeat-test-logs').with(
-        :path => '/etc/filebeat/conf.d/test-logs.yml',
-        :mode => '0644',
-        :content => 'filebeat:
+        path: '/etc/filebeat/conf.d/test-logs.yml',
+        mode: '0644',
+        content: 'filebeat:
   prospectors:
     - paths:
       - /var/log/java_app/some.log
@@ -122,24 +122,24 @@ describe 'filebeat::prospector', :type => :define do
 
   context 'On Windows' do
     let :facts do {
-      :kernel => 'Windows',
-      :rubyversion => '1.9.3',
+      kernel: 'Windows',
+      rubyversion: '1.9.3',
     }
     end
 
     context 'with file blobs set' do
       let :params do
         {
-          :paths => [
+          paths: [
             'C:/Program Files/Apache Software Foundation/Apache2.2/*.log',
           ],
-          :doc_type => 'apache',
+          doc_type: 'apache',
         }
       end
 
       it { is_expected.to contain_file('filebeat-test-logs').with(
-        :path => 'C:/Program Files/Filebeat/conf.d/test-logs.yml',
-        :content => 'filebeat:
+        path: 'C:/Program Files/Filebeat/conf.d/test-logs.yml',
+        content: 'filebeat:
   prospectors:
     - paths:
       - C:/Program Files/Apache Software Foundation/Apache2.2/*.log
