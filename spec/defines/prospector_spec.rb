@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'filebeat::prospector', :type => :define do
+describe 'filebeat::prospector', type: :define do
   let :pre_condition do
     'class { "filebeat":
         outputs => {
@@ -21,20 +21,21 @@ describe 'filebeat::prospector', :type => :define do
   end
 
   context 'On Linux' do
-    let :facts do {
+    let :facts do
+    {
       kernel: 'Linux',
       osfamily: 'Linux',
-      rubyversion: '1.9.3',
+      rubyversion: '1.9.3'
     }
     end
 
     context 'with file blobs set' do
       let :params do
         {
-          :paths => [
-            '/var/log/apache2/*.log',
+          paths: [
+            '/var/log/apache2/*.log'
           ],
-          :doc_type => 'apache',
+          doc_type: 'apache'
         }
       end
 
@@ -57,31 +58,31 @@ describe 'filebeat::prospector', :type => :define do
       max_backoff: 10s
       backoff_factor: 2
       max_bytes: 10485760
-',
+'
       )}
     end
     context 'with some java like multiline settings' do
       let :params do
         {
           paths: [
-            '/var/log/java_app/some.log',
+            '/var/log/java_app/some.log'
           ],
           doc_type: 'java_app',
           exclude_lines: [
-            '^DEBUG',
+            '^DEBUG'
           ],
-          include_line: [
+          include_lines: [
             '^ERROR',
-            '^WARN',
+            '^WARN'
           ],
           exclude_files: [
-            '.gz$',
+            '.gz$'
           ],
           multiline: {
             'pattern' => '^\[',
             'negate' => 'true',
-            'match' => 'after',
-          },
+            'match' => 'after'
+          }
         }
       end
 
@@ -115,15 +116,16 @@ describe 'filebeat::prospector', :type => :define do
         - \'^WARN\'
       exclude_lines:
         - \'^DEBUG\'
-',
+'
       )}
     end
   end
 
   context 'On Windows' do
-    let :facts do {
+    let :facts do
+    {
       kernel: 'Windows',
-      rubyversion: '1.9.3',
+      rubyversion: '1.9.3'
     }
     end
 
@@ -131,9 +133,9 @@ describe 'filebeat::prospector', :type => :define do
       let :params do
         {
           paths: [
-            'C:/Program Files/Apache Software Foundation/Apache2.2/*.log',
+            'C:/Program Files/Apache Software Foundation/Apache2.2/*.log'
           ],
-          doc_type: 'apache',
+          doc_type: 'apache'
         }
       end
 
@@ -155,7 +157,7 @@ describe 'filebeat::prospector', :type => :define do
       max_backoff: 10s
       backoff_factor: 2
       max_bytes: 10485760
-',
+'
       )}
     end
   end

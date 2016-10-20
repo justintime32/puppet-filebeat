@@ -5,7 +5,6 @@ describe 'filebeat class' do
   service_name = 'filebeat'
 
   context 'default parameters' do
-
     let(:pp) do
       <<-EOS
       class { 'filebeat':
